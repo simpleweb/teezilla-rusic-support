@@ -4758,6 +4758,9 @@ TOP BAR
   padding: 0;
   list-style-type: none;
 }
+#support-topbar ul li.mainsite-link {
+  text-align: left;
+}
 #support-topbar ul li:before {
   content: '•';
   margin: 0 10px 0 0;
