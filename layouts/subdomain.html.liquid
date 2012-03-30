@@ -1,0 +1,192 @@
+{% if env == "development" %}
+  {% assign asset_url="http://teezillasupport-assets" %}
+{% else %}
+  {% assign asset_url="http://rusic-forum-theme.s3.amazonaws.com" %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    
+    <title>
+        {% if idea %}
+          {{idea.title}} &middot; {{space.title}}
+        {% else %}
+          {{space.title}}
+        {% endif %}
+    </title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    {% if idea %}
+    <meta property="og:title" content="{{ idea.title }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{{ idea.permalink }}"/>
+    <meta property="og:image" content="{{idea.images.first.square}}"/>
+    <meta property="og:site_name" content="{{ space.title }}"/>
+    <meta property="og:description" content="{{ idea.content }}" />
+    {% else %}
+    <meta property="og:title" content="{{space.title}}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{{ space.permalink }}"/>
+    <meta property="og:image" content="{{ space.ideas.first.images.first.square}}"/>
+    <meta property="og:site_name" content="{{space.title}}"/>
+    <meta property="og:description" content="{{space.summary}}" />
+    {% endif %}
+
+    <!-- Stylesheets -->
+    <link href="{{ asset_url }}/css/styles.css" rel="stylesheet">
+
+    <!-- HTML5, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <!-- Scripts -->
+    {{ content_for_header }}
+
+    <!-- Fav & device icons -->
+    <link rel="shortcut icon" href="{{ asset_url }}/img/favicon.ico">
+    <link rel="apple-touch-icon" href="{{ asset_url }}/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset_url }}/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset_url }}/img/apple-touch-icon-114x114.png">
+
+  </head>
+
+  <body class="{{ body_class }} {% unless current_user %}logged-out{% endunless %}">
+
+    <div class="container">
+      <div id="support-topbar">
+        <ul>
+          <li><a id="inline" href="#about-teezilla">About TeeZilla</a></li>
+          <li><a href="http://teezilla.myshopify.com/" title="link to TeeZilla shop">Buy the Tee's</a></li>
+          <li><a href="{{space.permalink}}" class="active">Support</a></li>
+          <li><a id="inline" href="#terms-teezilla">Terms &amp; conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="teezilla-banner">
+      <a href="/teezilla" id="main_logo">Teezil.la Website</a>
+      <h1 id="space-title">TeeZilla Support</h1>
+    </div>
+
+    <!-- Wrapper -->
+    <div class="container" class="row">
+      <div class="row">
+
+        {% if error %}
+        <div class="alert alert-error">
+        <a class="close" data-dismiss="alert">×</a>
+        {{ error }}
+        </div>
+        {% endif %}
+        {% if alert %}
+        <div class="alert alert-block">
+        <a class="close" data-dismiss="alert">×</a>
+        {{ alert }}
+        </div>
+        {% endif %}
+        {% if notice %}
+        <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        {{ notice }}
+        </div>
+        {% endif %}
+
+        <!-- Main container -->
+        <div id="main-container" class="span11">
+
+          {{ yield }}
+        
+        </div>
+        
+        <hr />
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="span5">
+
+          {% if current_user %}
+          <div id="add-new" class="widget">
+            <a href="{{ space.permalink }}/ideas/new" title="add new topic" class="add-post btn btn-large btn-primary"><i class="icon-plus-sign icon-white"></i> Add new topic</a>
+          </div>
+          {% else %}
+          <div id="add-new" class="widget">
+            <div class="add-post btn btn-large btn-primary disabled">Add new topic</div>
+            <div class="login-prompt">
+              <span class="pointer"></span>
+              <span>To post a new topic please login with Twitter or Facebook:</span>
+              <ul class="auth">
+                  <li class="twitter"><a href="/auth/twitter"><span></span><i class="icon-twitter"></i> Login with Twitter</a></li>
+                  <li class="facebook"><a href="/auth/facebook"><span></span><i class="icon-facebook"></i> Login with Facebook</a></li>
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+          
+          <div id="space-description" class="widget">
+            {{ space.summary | markdown }}
+          </div>
+
+          <div id="space-share" class="widget">
+            <h4>Share this {% if idea %}topic{% else %}space{% endif %}</h4>
+            {% if idea %}
+            <div id="shareme" data-text="{{ idea.content }} -"></div>
+            {% else %}
+            <div id="shareme" data-text="{{ space.summary }} -"></div>
+            {% endif %}
+          </div>
+
+          <div id="popular-posts" class="widget">
+            <h4>Popular topics</h4>
+            <ul>
+              {% for idea in space.most_commented_ideas | limit: 4 %}
+              <li>
+                <img src="{{idea.user.image_url}}" alt="{{ idea.user.nickname }}'s avatar from {{idea.user.provider}}" class="avatar" width="35" height="35" />
+                <div class="meta">
+                  <h5><a href="{{ idea.permalink }}" title="link to {{ idea.title }}">{{ idea.title }}</a></h5>
+                  <span class="author">by {{ idea.user.nickname }}</span>
+                  <span class="responses">{{ idea.comments_count }} replies</span>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+        </div>
+
+      </div> <!-- /row -->
+
+      <hr />
+      
+      <footer class="footer">
+          <a href="{{ space.permalink }}.atom" title="link to RSS feed for {{ space.title }}" class="rss-link">RSS feed for {{ space.title }}</a>
+          <p class="powered-by">{{ space.title }} is powered by <a href="http://rusic.com" title="link to Rusic">Rusic</a></p>
+      </footer>
+
+    </div> <!-- end wrapper -->
+
+    <!-- Javascripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-transition.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-alert.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-modal.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-dropdown.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-scrollspy.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-tab.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-tooltip.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-popover.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-button.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-collapse.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-carousel.js"></script>
+    <script src="{{ asset_url }}/js/bootstrap-typeahead.js"></script>
+    <script src="{{ asset_url }}/js/jquery.validate.min.js"></script>
+    <script src="{{ asset_url }}/js/jquery.sharrre-1.2.0.min.js"></script>
+    <script src="{{ asset_url }}/js/scripts.js"></script>
+
+  </body>
+</html>
