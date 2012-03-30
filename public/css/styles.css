@@ -4758,15 +4758,13 @@ TOP BAR
   padding: 0;
   list-style-type: none;
 }
-#support-topbar ul li.mainsite-link {
-  text-align: left;
-}
 #support-topbar ul li:before {
   content: '•';
   margin: 0 10px 0 0;
   color: #555555;
 }
-#support-topbar ul li:first-child:before {
+#support-topbar ul li:first-child:before,
+#support-topbar ul li.about:before {
   content: '';
 }
 #support-topbar ul li a {
@@ -4776,4 +4774,11 @@ TOP BAR
 #support-topbar ul li a.active {
   color: #C60909;
   text-decoration: none;
+}
+#support-topbar .mainsite-link {
+  float: left;
+  text-align: left;
+}
+#support-topbar .mainsite-link:after {
+  content: '';
 }
