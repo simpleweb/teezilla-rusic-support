@@ -52,6 +52,9 @@
     <link rel="apple-touch-icon" href="{{ asset_url }}/img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset_url }}/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset_url }}/img/apple-touch-icon-114x114.png">
+    
+    <!-- Scripts -->
+    {{ content_for_header }}
 
   </head>
 
@@ -204,7 +207,6 @@
     </div>
 
     <!-- Javascripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-transition.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-alert.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-modal.js"></script>
