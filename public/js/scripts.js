@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	
+	$("a#inline").fancybox({
+		'hideOnContentClick': true
+	 });
 
 	 // AJAXIFY LIKE BUTTONS
 	  $('.action-like').click(function(){
