@@ -40,20 +40,21 @@
 
     <!-- Stylesheets -->
     <link href="{{ asset_url }}/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 
     <!-- HTML5, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
-    <!-- Scripts -->
-    {{ content_for_header }}
-
     <!-- Fav & device icons -->
     <link rel="shortcut icon" href="{{ asset_url }}/img/favicon.ico">
     <link rel="apple-touch-icon" href="{{ asset_url }}/img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset_url }}/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset_url }}/img/apple-touch-icon-114x114.png">
+    
+    <!-- Scripts -->
+    {{ content_for_header }}
 
   </head>
 
@@ -62,12 +63,13 @@
     <div class="container">
       <div id="support-topbar">
         <ul>
-          <li><a href="http://teezilla.rusic.com" title="back to TeeZilla main site" class="mainsite-link">&laquo; back to main TeeZilla site</a></li>
-          <li class="about"><a id="inline" href="#about-teezilla">About TeeZilla</a></li>
+          <li><a href="http://teezilla.rusic.com" title="back to TeeZilla main site" class="mainsite-link">&laquo; back to main Teezilla site</a></li>
+          <li class="about"><a id="inline" href="#teezilla-about">About Teezilla</a></li>
           <li><a href="http://teezilla.myshopify.com/" title="link to TeeZilla shop">Buy the Tee's</a></li>
-          <li><a href="{{space.permalink}}" class="">FAQs</a></li>
-          <li><a href="{{space.permalink}}" class="active">Support</a></li>
-          <li><a id="inline" href="#terms-teezilla">Terms &amp; conditions</a></li>
+          <li><a href="http://www.facebook.com/pages/TeeZilla/269323539774090" title="link to Teezilla on Facebook">Teezilla on Facebook</a></li>
+          <li><a href="http://teezilla.rusic.com/teezilla-support/ideas/2031" title="link to Teezilla FAQ's">FAQs</a></li>
+          <li><a href="http://teezilla.rusic.com/teezilla-support" title="link to Teezilla support community" class="active">Support</a></li>
+          <li><a id="inline" href="#teezilla-terms">Terms &amp; conditions</a></li>
         </ul>
       </div>
     </div>
@@ -115,6 +117,7 @@
           {% if current_user %}
           <div id="add-new" class="widget">
             <a href="{{ space.permalink }}/ideas/new" title="add new topic" class="add-post btn btn-large btn-primary"><i class="icon-plus-sign icon-white"></i> Add new topic</a>
+            <span class="logged-in">logged in as {{current_user.nickname}} <a href="/auth/signout" title="logout of Rusic">(logout)</a></span>
           </div>
           {% else %}
           <div id="add-new" class="widget">
@@ -135,7 +138,7 @@
           </div>
 
           <div id="space-share" class="widget">
-            <h4>Share this</h4>
+            <h4>Share this {% if idea %}topic{% else %}page{% endif %}</h4>
             {% if idea %}
             <div id="shareme" data-text="{{ idea.content }} -"></div>
             {% else %}
@@ -171,9 +174,39 @@
       </footer>
 
     </div> <!-- end wrapper -->
+    
+    <!-- About Teezilla -->
+    <div style="display:none">
+      <div id="teezilla-about" class="htmlbox">
+        <h1>About Teezilla</h1>
+        <p>Teezilla is a site where anyone with an idea can join up, submit their designs and be in with a chance of winning £200, then get their teeshirt design printed.</p>
+        <p>The idea of Teezilla has been formed by a partnership between web company Simpleweb, based on the Bristol Harbourside and ex record producer and entrepreneur Neal Slateford.</p>
+        <p>Teezilla invites you to join up and submit as many teeshirt designs as you like.  The designs are then exhibited on the site for 14 days.  In this time other users can log in and ‘like’ their favorite designs through Facebook and / or Twitter, as well as leaving comments. At the end of every month the tee with the most likes wins £200 and the teeshirt gets printed.</p>
+        <p>Cast your votes or submit and design now and join the Teezilla community.</p>
+      </div>
+    </div>
+    
+    <!-- Terms & Conditions -->
+    <div style="display:none">
+      <div id="teezilla-terms" class="htmlbox">
+        <h1>Terms &amp; Conditions</h1>
+        <ol class="terms">
+          <li>Teezilla acknowledges that the Illustrator is first and sole owner of all “copyright” and shall retain intellectual rights of all Illustration(s).</li>
+          <li>The winner upon payment in full of £200 prize money, shall grant Teezilla unlimited rights for winning design and shall transfer ownership of high resolution scans of the illustrations to Teezilla for 12 months.</li>
+          <li>Illustrator is entitled to use all Illustrations for self promotion purposes or to enter into any contest, unless cited as a winner in which case Royalty Free Rights will be signed to Teezilla for 12 months.</li>
+          <li>Reassigning of Rights: Teezilla may not assign or transfer this Licence or any part thereof unless authorised in writing by Illustrator.</li>
+          <li>No modifications, changes or alterations may be made to Illustrations or any part thereof, directly or indirectly, without Illustrator’s prior written consent.</li>
+          <li>Credit: Teezilla agrees to include a credit to Illustrator in connection with the Work.</li>
+          <li>Illustrator’s Copies: Teezilla shall furnish Illustrator with one copy of the Work upon publication.</li>
+          <li>Terms become effective upon the signing of the agreement.</li>
+          <li>Voting window: Every entry gets 14 days for votes. At the end of a month the entry with the most votes in a complete 14 day cycle is the winner. If the cycle isn't complete it carries into the next month.</li>
+          <li>An entry can not win 2 months in a row unless it is re-entered.</li>
+          <li>Users of Teezilla warrant that the material submitted is not obscene, offensive, defamatory of any person or otherwise illegal; and, agree not to post material which is deliberately intended to upset other users.</li>
+        </ol>
+      </div>
+    </div>
 
     <!-- Javascripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-transition.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-alert.js"></script>
     <script src="{{ asset_url }}/js/bootstrap-modal.js"></script>
@@ -189,6 +222,7 @@
     <script src="{{ asset_url }}/js/jquery.validate.min.js"></script>
     <script src="{{ asset_url }}/js/jquery.sharrre-1.2.0.min.js"></script>
     <script src="{{ asset_url }}/js/scripts.js"></script>
-
+    <script src="{{ asset_url }}/js/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+    <script src="{{ asset_url }}/js/scripts.js" type="text/javascript"></script>
   </body>
 </html>
