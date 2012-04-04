@@ -138,7 +138,7 @@
           </div>
 
           <div id="space-share" class="widget">
-            <h4>Share this</h4>
+            <h4>Share this {% if idea %}topic{% else %}page{% endif %}</h4>
             {% if idea %}
             <div id="shareme" data-text="{{ idea.content }} -"></div>
             {% else %}
